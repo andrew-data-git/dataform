@@ -1,0 +1,14 @@
+config {
+    type: "incremental",
+    schema: "gold",
+    name: "average_rainfall",
+    description: "Provide the average rainfall by day",
+}
+
+SELECT
+  date_on,
+  AVG(precipitation) AS avg_precipitation
+FROM
+  ${ref("weather")}
+GROUP BY
+  date_on

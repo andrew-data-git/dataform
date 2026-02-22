@@ -1,0 +1,30 @@
+config {
+    type: "incremental",
+    schema: "silver",
+    name: "weather",
+    description: "A cleaned version of the weather data",
+    columns: {
+      precipitation: "This is the rainfall in mm, as a float"
+    }
+}
+
+SELECT
+  -- Cast this as float
+  CAST(`DataPrecipitation` AS FLOAT64) AS precipitation,
+  -- And this is a date
+  CAST(`DateFull` AS DATE) AS date_on,
+  --  All else int or string
+  CAST(`DateMonth` AS INT64) AS month_num,
+  CAST(`DateWeek of` AS INT64) AS week_num,
+  CAST(`DateYear` AS INT64) AS year_num,
+  CAST(`StationCity` AS STRING) AS city,
+  CAST(`StationCode` AS STRING) AS station_code,
+  CAST(`StationLocation` AS STRING) AS location,
+  CAST(`StationState` AS STRING) AS state,
+  CAST(`DataTemperatureAvgTemp` AS INT64) AS avg_temp,
+  CAST(`DataTemperatureMaxTemp` AS INT64) AS max_temp,
+  CAST(`DataTemperatureMinTemp` AS INT64) AS min_temp,
+  CAST(`DataWindDirection` AS INT64) AS wind_direction,
+  CAST(`DataWindSpeed` AS INT64) AS wind_speed
+FROM
+  ${ref("csv_weather")}
